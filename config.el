@@ -96,11 +96,7 @@
                     ("c" "Captures"))))
 
 (after! org (add-to-list 'org-capture-templates
-<<<<<<< HEAD
-             '("ct" "Task" entry (file "~/org/workload/inbox.org")
-=======
-             '("ct" "Task" entry (file+headline "~/.org/workload/tasks.org" "INBOX")
->>>>>>> master
+             '("ct" "Task" entry (file+headline "~/org/workload/tasks.org" "INBOX")
                "* TODO %^{taskname} %^{CATEGORY}p
 :PROPERTIES:
 :CREATED: %U
@@ -434,24 +430,10 @@
 (setq org-agenda-custom-commands
       '(("k" "Tasks"
          ((agenda ""
-<<<<<<< HEAD
-           ((org-agenda-overriding-header "Agenda")
-            (org-agenda-span 'day)
-            (org-agenda-start-day (org-today))
-            (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org"))))
-          (todo ""
-                  ((org-agenda-overriding-header "Tasks")
-                   (org-agenda-files '("~/org/workload/tasks.org"))
-                   (org-super-agenda-groups
-                    '((:auto-category t)))))
-          (todo ""
-                ((org-agenda-overriding-header "Inbox")
-                 (org-agenda-files '("~/org/workload/inbox.org"))))))
-=======
                   ((org-agenda-overriding-header "Agenda")
                    (org-agenda-span 'day)
                    (org-agenda-start-day (org-today))
-                   (org-agenda-files '("~/.org/workload/tasks.org" "~/.org/workload/tickler.org"))))
+                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org"))))
           (todo ""
                 ((org-agenda-overriding-header "Tasks")
                  (org-agenda-skip-function
@@ -461,21 +443,20 @@
                      (org-agenda-skip-entry-if 'notregexp ":@\\w+"))
                     (org-agenda-skip-if nil '(scheduled deadline))
                     (org-agenda-skip-if 'todo '("SOMEDAY"))))
-                 (org-agenda-files '("~/.org/workload/tasks.org"))
+                 (org-agenda-files '("~/org/workload/tasks.org"))
                  (org-super-agenda-groups
                   '((:name "Priority Items"
                            :priority>= "B")
                     (:auto-category t)))))
           (todo ""
                 ((org-agenda-overriding-header "Delegated Tasks")
-                 (org-agenda-files '("~/.org/workload/tasks.org"))
+                 (org-agenda-files '("~/org/workload/tasks.org"))
                  (org-tags-match-list-sublevels t)
                  (org-agenda-skip-function
                   '(or
                     (org-agenda-skip-subtree-if 'nottodo '("DELEGATED"))))
                  (org-super-agenda-groups
                   '((:auto-property "WHO")))))))
->>>>>>> master
         ("n" "Notes"
          ((todo ""
                 ((org-agenda-overriding-header "Note Actions")
@@ -497,17 +478,11 @@
                   '((:auto-ts t)))))))
         ("s" "Someday"
          ((todo ""
-<<<<<<< HEAD
-                ((org-agenda-overriding-header "Someday Tasks")
-                 (org-agenda-files '("~/org/workload/someday.org"))
-                 (org-agenda-prefix-format " %(my-agenda-prefix) ")
-=======
                 ((org-agenda-overriding-header "Someday")
                  (org-agenda-skip-function
                   '(or
                     (org-agenda-skip-entry-if 'nottodo '("SOMEDAY"))))
-                 (org-agenda-files '("~/.org/workload/tasks.org"))
->>>>>>> master
+                 (org-agenda-files '("~/org/workload/tasks.org"))
                  (org-super-agenda-groups
                   '((:auto-parent t)))))))))
 
