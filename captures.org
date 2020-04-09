@@ -21,7 +21,7 @@
 (defun my/generate-org-note-name ()
 ;  (setq my-org-note--category (read-string "Category: "))
   (setq my-org-note--name (read-string "Name: "))
-  (expand-file-name (format "%s.org" my-org-note--name) "~/.org/notes/"))
+  (expand-file-name (format "%s.org" my-org-note--name) "~/org/notes/"))
 
 (after! org (add-to-list 'org-capture-templates
                          '("nn" "New Note" plain (file my/generate-org-note-name)
@@ -45,7 +45,7 @@
 (defun org-capture-file-selector ()
   "test file selector"
   (interactive)
-  (setq org-notes-directory "~/.org/notes/")
+  (setq org-notes-directory "~/org/notes/")
   (concat (read-file-name "Select file: " org-notes-directory)))
 (after! org (add-to-list 'org-capture-templates
                          '("ni" "Itemized Notes" plain (file+function org-capture-file-selector org-capture-headline-finder)
@@ -55,7 +55,7 @@
 *** New Task
 #+BEGIN_SRC emacs-lisp
 (after! org (add-to-list 'org-capture-templates
-             '("tt" "New Task" entry (file "~/.org/workload/inbox.org")
+             '("tt" "New Task" entry (file "~/org/workload/inbox.org")
                "* TODO %^{taskname} %^G
 :PROPERTIES:
 :CREATED: %U
@@ -68,7 +68,7 @@
 *** New Itemized Note
 #+BEGIN_SRC emacs-lisp
 (after! org (add-to-list 'org-capture-templates
-             '("ti" "+Task Item" plain (file+function "~/.org/workload/tasks.org" org-capture-headline-finder)
+             '("ti" "+Task Item" plain (file+function "~/org/workload/tasks.org" org-capture-headline-finder)
 "- %u %?")))
 #+END_SRC
 *** Child Task
@@ -82,7 +82,7 @@
 *** Reference
 #+BEGIN_SRC emacs-lisp
 (after! org (add-to-list 'org-capture-templates
-             '("cr" "Reference" entry (file "~/.org/workload/references.org")
+             '("cr" "Reference" entry (file "~/org/workload/references.org")
 "* TODO %^{reference}
 %(format \"%s\" (org-capture-template-selector))%?")))
 #+END_SRC
@@ -91,10 +91,10 @@
 (defun my/generate-org-diary-name ()
   (setq my-org-note--name (read-string "Name: "))
   (setq my-org-note--time (format-time-string "%Y-%m-%d"))
-  (expand-file-name (format "%s %s.org" my-org-note--time my-org-note--name) "~/.org/diary/"))
+  (expand-file-name (format "%s %s.org" my-org-note--time my-org-note--name) "~/org/diary/"))
 
 (after! org (add-to-list 'org-capture-templates
-                  '("cd" "Diary" entry (file+datetree "~/.org/workload/diary.org")
+                  '("cd" "Diary" entry (file+datetree "~/org/workload/diary.org")
                     "* %\\1
 :PROPERTIES:
 :TAG:      %^{TAG}
@@ -104,7 +104,7 @@
 *** Time Tracking
 #+BEGIN_SRC emacs-lisp
 (after! org (add-to-list 'org-capture-templates
-             '("cx" "Time Tracker" entry (file+olp+datetree "~/.org/workload/timetracking.org")
+             '("cx" "Time Tracker" entry (file+olp+datetree "~/org/workload/timetracking.org")
                "* [%\\1] %\\7 for %\\5
 :PROPERTIES:
 :CASENUMBER: %^{Case or SVCTAG}
