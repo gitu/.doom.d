@@ -419,7 +419,7 @@
       '(("k" "Tasks"
          ((agenda ""
                   ((org-agenda-overriding-header "Agenda")
-                   (org-agenda-span 1)
+                   (org-agenda-span '1)
                    (org-agenda-start-day (org-today))
                    (org-agenda-files my-task-files)))
           (todo ""
