@@ -431,7 +431,7 @@
       '(("k" "Tasks"
          ((agenda ""
                   ((org-agenda-overriding-header "Agenda")
-                   (org-agenda-span 'day)
+                   (org-agenda-span 2)
                    (org-agenda-start-day (org-today))
                    (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org"))))
           (todo ""
@@ -447,7 +447,7 @@
                  (org-super-agenda-groups
                   '((:name "Priority Items"
                            :priority>= "B")
-                    (:auto-category t)))) nil ("~/org/ax/tasks.html" "~/org/ax/tasks.html"))
+                    (:auto-category t)))) )
           (todo ""
                 ((org-agenda-overriding-header "Delegated Tasks")
                  (org-agenda-files '("~/org/workload/tasks.org"))
@@ -456,7 +456,9 @@
                   '(or
                     (org-agenda-skip-subtree-if 'nottodo '("DELEGATED"))))
                  (org-super-agenda-groups
-                  '((:auto-property "WHO")))))))
+                  '((:auto-property "WHO"))))))
+                    nil ("~/org/ax/tasks.html" "~/org/ax/tasks.txt")
+          )
         ("n" "Notes"
          ((todo ""
                 ((org-agenda-overriding-header "Note Actions")
