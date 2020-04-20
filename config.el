@@ -70,7 +70,7 @@
     (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
 )
 
-(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org")))
+(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org" "~/org/workload/cnfi.org" "~/org/workload/priv.org")))
 ;(after! org (setq org-super-agenda-groups
 ;                  '((:auto-category t))))
 (after! org (setq org-agenda-diary-file "~/org/diary.org"
@@ -433,7 +433,7 @@
                   ((org-agenda-overriding-header "Agenda")
                    (org-agenda-span 2)
                    (org-agenda-start-day (org-today))
-                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org"))))
+                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cnfi.org" "~/org/workload/priv.org"))))
           (todo ""
                 ((org-agenda-overriding-header "Tasks")
                  (org-agenda-skip-function
