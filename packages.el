@@ -8,8 +8,12 @@
 (package! ox-twbs)
 (package! deadgrep)
 (package! org-web-tools)
-(package! emacs-vega-view
-  :recipe (:host github :repo "appliedsciencestudio/emacs-vega-view"))
+(package! company-org-roam)
+(package! bookmark+
+  :recipe (:host github :repo "emacsmirror/bookmark-plus"))
+(package! doct
+  :recipe (:host github :repo "progfolio/doct"))
+                                        ;(package! emacs-vega-view  :recipe (:host github :repo "appliedsciencestudio/emacs-vega-view"))
 ;; Optional
 ;(package! org-board)
 ;(package! org-mind-map)

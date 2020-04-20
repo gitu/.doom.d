@@ -1,37 +1,66 @@
-;;; ~/.doom.d/agenda.el -*- lexical-binding: t; -*-
-
-(defun org-capture-templates-file-select (checklist)
-  "Concat results to function"
+;;;; ~/.doom.d/agenda.el -*- lexical-binding: t; -*-
+(defun org-capture-template-dynamic-headline ()
+  "A guided walk-through to capturing"
   (interactive)
-  (if (equal checklist "Buffer")
-      (concat (buffer-name))
-    (org-capture-file-selector)))
+  (let ((org-agenda-files (list (buffer-file-name (current-buffer)))))
+    (if (null (car org-agenda-files))
+        (error "%s is not visiting a faile" (buffer-name (current-buffer)))
+      (counsel-org-agenda-headlines)))
+  (goto-char (org-end-of-subtree))
+  (if (eq (count-lines (point-min) (point-max)) (count-lines (point-min) (point)))
+      (newline-and-indent))
+  (defvar option1 '("TASK" "Headline"))
+  (defvar option2 '("Active Timestamp" "In-active Timestamp" "No Timestamp"))
+  (let ((selection (ivy-completing-read "Choose an option: " option1))
+        (date1 (ivy-completing-read "Choose 2nd option: " option2)))
+    (setq org-capture-templates-dynamic-opt (concat
+                                             (or
+                                              (if (equal selection (nth 0 option1))
+                                                  (concat "* TODO "))
+                                              (if (equal selection (nth 1 option1))
+                                                  (concat "* ")))
+                                             (or
+                                              (if (equal date1 (nth 0 option2))
+                                                  (concat (format-time-string "<%Y-%m-%d %a>")))
+                                              (if (equal date1 (nth 1 option2))
+                                                  (concat (format-time-string "[%Y-%m-%d %a]")))
+                                              (if (equal date1 (nth 2 option2))
+                                                  (concat "")))))))
 
-(org-capture-templates-file-selector)
+; "Checks to see if the current line position is at the end of the buffer or not.")
+(if (eq (count-lines (point-min) (point-max)) (count-lines (point-min) (point)))
+    (newline-and-indent))
 
-(defun org-capture-templates-file-selector ()
-  "Select your choice"
+(defun org-capture-templates-append-notes ()
+  "A guided walk-through to capturing"
   (interactive)
-  (let ((choice '("Buffer" "File")))
-    (org-capture-templates-file-select (org-completing-read "Pick option: " choice))))
-
-(defun org-capture-headline-finder (&optional arg)
-  "Like `org-todo-list', but using only the current buffer's file."
-  (interactive "P")
   (let ((org-agenda-files (list (buffer-file-name (current-buffer)))))
     (if (null (car org-agenda-files))
         (error "%s is not visiting a file" (buffer-name (current-buffer)))
       (counsel-org-agenda-headlines)))
-  (goto-char (org-end-of-subtree)))
-
-(defun org-capture-headline-finder2 (&optional arg)
-  "Like `org-todo-list', but using only the current buffer's file."
-  (interactive "P")
-  (let ((org-agenda-files (list (buffer-file-name (current-buffer)))))
-    (if (null (car org-agenda-files))
-        (error "%s is not visiting a file" (buffer-name (current-buffer)))
-      (org-refile))))
-
-(setq org-capture-templates
-      '(("x" "Test Item" plain (file+function org-capture-templates-file-selector org-capture-headline-finder)
-         "%(format \"%s\" (org-capture-template-selector))%?")))
+  (while (org-at-heading-p) (forward-line))
+  (loop-until (or (org-at-item-p)
+                  (org-at-heading-p))
+                  (forward-line))
+    (if (eq (count-lines (point-min) (point-max)) (count-lines (point-min) (point)))
+        (newline-and-indent))
+    (let ((var1 '("Checklist" "List" "None"))
+          (var2 '("None" "Inactive" "Active")))
+      (let
+          ((selection (ivy-completing-read "Choose Line: " var1))
+           (date1 (ivy-completing-read "Choose timestamp: " var2)))
+        (setq org-capture-templates-dynamic-opt2 (concat
+                                                  (or
+                                                   (if (equal selection (nth 0 var1))
+                                                       (concat "- [ ] "))
+                                                   (if (equal selection (nth 1 var1))
+                                                       (concat "- "))
+                                                   (if (equal selection (nth 2 var1))
+                                                       (concat "")))
+                                                  (or
+                                                   (if (equal date1 (nth 0 var2))
+                                                       (concat ""))
+                                                   (if (equal date1 (nth 1 var2))
+                                                       (concat (format-time-string "[%Y-%m-%d %a]")))
+                                                   (if (equal date1 (nth 2 var2))
+                                                       (concat (format-time-string "<%Y-%m-%d %a>")))))))))
