@@ -566,7 +566,7 @@ Need to add condition to adjust faces based on theme select.
                  (org-super-agenda-groups
                   '((:name "Priority Items"
                            :priority>= "B")
-                    (:auto-category t)))))
+                    (:auto-category t)))) nil ("~/org/ax/tasks.html" "~/org/ax/tasks.html"))
           (todo ""
                 ((org-agenda-overriding-header "Delegated Tasks")
                  (org-agenda-files '("~/org/workload/tasks.org"))
@@ -614,18 +614,6 @@ Need to add condition to adjust faces based on theme select.
   (interactive "p")
   (dotimes (_ count) (+org--insert-item 'below) (org-end-of-line) (insert (org-format-time-string "[%Y-%m-%d %a]") " ")))
 (map! :n "S-<return>" #'+org/insert-item-below-w-timestamp)
-#+END_SRC
-** my--browse-url
-#+BEGIN_SRC emacs-lisp
-(defun my--browse-url (url &optional _new-window)
-  ;; new-window ignored
-  "Opens link via powershell.exe"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (let ((quotedUrl (format "start '%s'" url)))
-    (apply 'call-process "C:\Program Files\PowerShell\6\pwsh.exe" nil
-           0 nil
-           (list "-Command" quotedUrl))))
-(setq-default browse-url-browser-function 'my--browse-url)
 #+END_SRC
 ** my-agenda-prefix
 #+BEGIN_SRC emacs-lisp

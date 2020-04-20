@@ -447,7 +447,7 @@
                  (org-super-agenda-groups
                   '((:name "Priority Items"
                            :priority>= "B")
-                    (:auto-category t)))))
+                    (:auto-category t)))) nil ("~/org/ax/tasks.html" "~/org/ax/tasks.html"))
           (todo ""
                 ((org-agenda-overriding-header "Delegated Tasks")
                  (org-agenda-files '("~/org/workload/tasks.org"))
@@ -491,16 +491,6 @@
   (interactive "p")
   (dotimes (_ count) (+org--insert-item 'below) (org-end-of-line) (insert (org-format-time-string "[%Y-%m-%d %a]") " ")))
 (map! :n "S-<return>" #'+org/insert-item-below-w-timestamp)
-
-(defun my--browse-url (url &optional _new-window)
-  ;; new-window ignored
-  "Opens link via powershell.exe"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (let ((quotedUrl (format "start '%s'" url)))
-    (apply 'call-process "C:\Program Files\PowerShell\6\pwsh.exe" nil
-           0 nil
-           (list "-Command" quotedUrl))))
-(setq-default browse-url-browser-function 'my--browse-url)
 
 (defun my-agenda-prefix ()
   (format "%s" (my-agenda-indent-string (org-current-level))))
