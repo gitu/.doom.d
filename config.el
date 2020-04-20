@@ -70,7 +70,7 @@
     (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
 )
 
-(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org")))
+(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org")))
 ;(after! org (setq org-super-agenda-groups
 ;                  '((:auto-category t))))
 (after! org (setq org-agenda-diary-file "~/org/diary.org"
@@ -433,7 +433,7 @@
                   ((org-agenda-overriding-header "Agenda")
                    (org-agenda-span 'day)
                    (org-agenda-start-day (org-today))
-                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org"))))
+                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org"))))
           (todo ""
                 ((org-agenda-overriding-header "Tasks")
                  (org-agenda-skip-function
@@ -473,7 +473,7 @@
                     (org-agenda-skip-if 'nil '(scheduled deadline))
                     (org-agenda-skip-entry-if 'todo '("SOMEDAY"))
                     (org-agenda-skip-entry-if 'todo '("DELEGATED"))))
-                 (org-agenda-files '("~/.org/workload/tasks.org"))
+                 (org-agenda-files '("~/org/workload/tasks.org"))
                  (org-super-agenda-groups
                   '((:auto-ts t)))))))
         ("s" "Someday"
@@ -497,7 +497,7 @@
   "Opens link via powershell.exe"
   (interactive (browse-url-interactive-arg "URL: "))
   (let ((quotedUrl (format "start '%s'" url)))
-    (apply 'call-process "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" nil
+    (apply 'call-process "C:\Program Files\PowerShell\6\pwsh.exe" nil
            0 nil
            (list "-Command" quotedUrl))))
 (setq-default browse-url-browser-function 'my--browse-url)

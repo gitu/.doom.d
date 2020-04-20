@@ -117,7 +117,7 @@ For fonts please download [[https://input.fontbureau.com/download/][Input]] and 
 #+END_SRC
 *** Agenda
 #+BEGIN_SRC emacs-lisp
-(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org")))
+(after! org (setq org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/references.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org")))
 ;(after! org (setq org-super-agenda-groups
 ;                  '((:auto-category t))))
 (after! org (setq org-agenda-diary-file "~/org/diary.org"
@@ -552,7 +552,7 @@ Need to add condition to adjust faces based on theme select.
                   ((org-agenda-overriding-header "Agenda")
                    (org-agenda-span 'day)
                    (org-agenda-start-day (org-today))
-                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org"))))
+                   (org-agenda-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cal-outlook.org" "~/org/workload/cal-google.org"))))
           (todo ""
                 ((org-agenda-overriding-header "Tasks")
                  (org-agenda-skip-function
@@ -592,7 +592,7 @@ Need to add condition to adjust faces based on theme select.
                     (org-agenda-skip-if 'nil '(scheduled deadline))
                     (org-agenda-skip-entry-if 'todo '("SOMEDAY"))
                     (org-agenda-skip-entry-if 'todo '("DELEGATED"))))
-                 (org-agenda-files '("~/.org/workload/tasks.org"))
+                 (org-agenda-files '("~/org/workload/tasks.org"))
                  (org-super-agenda-groups
                   '((:auto-ts t)))))))
         ("s" "Someday"
@@ -605,6 +605,7 @@ Need to add condition to adjust faces based on theme select.
                  (org-super-agenda-groups
                   '((:auto-parent t)))))))))
 #+END_SRC
+
 * Custom Functions
 ** +org/insert-item-below-w-timestamp
 #+BEGIN_SRC emacs-lisp
@@ -621,7 +622,7 @@ Need to add condition to adjust faces based on theme select.
   "Opens link via powershell.exe"
   (interactive (browse-url-interactive-arg "URL: "))
   (let ((quotedUrl (format "start '%s'" url)))
-    (apply 'call-process "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" nil
+    (apply 'call-process "C:\Program Files\PowerShell\6\pwsh.exe" nil
            0 nil
            (list "-Command" quotedUrl))))
 (setq-default browse-url-browser-function 'my--browse-url)
