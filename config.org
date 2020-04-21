@@ -1,12 +1,5 @@
 #+EXPORT_FILE_NAME: README
 
-My DOOM emacs private configuration:
-[[file:attachments/doom.png]]
-
-High focus on GTD process workflow: ([[https://github.com/nmartin84/.references/blob/master/gtd-babel.org][source]])
-#+RESULTS:
-[[file:./attachments/gtd.png]]
-
 * Getting started
 If you have not installed DOOM Emacs but would like to:
 #+BEGIN_EXAMPLE
@@ -28,37 +21,14 @@ from the Emacs Lisp code blocks in ~config.org~. This readme file gets created w
 ** Theme
 #+BEGIN_SRC emacs-lisp
 (setq doom-theme 'doom-vibrant)
-(custom-theme-set-faces
- 'user
- '(org-ellipsis ((t (:foreground "SpringGreen")))))
-(if (equal doom-theme 'chocolate)
-     (custom-theme-set-faces
-      'user
-      '(org-list-dt ((t (:foreground "cadet blue"))))
-      '(org-ellipsis ((t (:foreground "gold"))))))
-(if (equal doom-theme 'chocolate)
-     (setq org-emphasis-alist
-           '(("*" (bold :foreground "MediumPurple"))
-             ("/" (italic :foreground "VioletRed"))
-             ("_" underline)
-             ("=" (:foreground "cadet blue"))
-             ("~" (:foreground "cadet blue"))
-             ("+" (:foreground "slate grey" :strike-through t)))))
-     (if (equal doom-theme 'doom-snazzy)
-         (custom-theme-set-faces
-          'user
-          '(org-block ((t (:background "#20222b"))))
-          '(org-block-begin-line ((t (:background "#282A36"))))
-          '(org-ellipsis ((t (:foreground "SpringGreen"))))
-          '(org-headline-done ((t (:strike-through t))))))
 #+END_SRC
 * Environment
 ** User Settings
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Florian Schrag"
       user-mail-address "f@schr.ag")
-(display-time-mode 1)
-(setq display-time-day-and-date t)
+;(display-time-mode 1)
+;(setq display-time-day-and-date t)
 #+END_SRC
 ** Default Files
 #+BEGIN_SRC emacs-lisp
@@ -77,6 +47,7 @@ from the Emacs Lisp code blocks in ~config.org~. This readme file gets created w
 (defvar my-org-archive-location "~/org/workload/archive.org::datetree/")
 (defvar my-org-default-notes-files "~/org/workload/inbox.org")
 (defvar my-org-archive-directory "~/org/archives/")
+(setq org-journal-dir my-deft-directory)
 #+END_SRC
 ** Keys
 #+BEGIN_SRC emacs-lisp
@@ -127,21 +98,13 @@ Set line numbers to relative:
 (setq display-line-numbers-type 'relative)
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
+;(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 #+END_SRC
 * Module Settings
-** Bookmark+
-#+BEGIN_SRC emacs-lisp
-(require 'bookmark+)
-#+END_SRC
 ** Deft Mode
 #+BEGIN_SRC emacs-lisp
 (setq deft-directory my-deft-directory)
 (setq deft-current-sort-method 'title)
-#+END_SRC
-** Elfeed
-#+BEGIN_SRC emacs-lisp
-(setq rmh-elfeed-org-files my-elfeed-org-files)
 #+END_SRC
 ** OrgMode
 *** Agenda
@@ -204,7 +167,7 @@ Set line numbers to relative:
 #+BEGIN_SRC emacs-lisp
 (defun my/generate-org-note-name ()
   (setq my-org-note--name (read-string "Name: "))
-  (expand-file-name (format "%s.org" my-org-note--name) "~/.org/notes/"))
+  (expand-file-name (format "%s.org" my-org-note--name) "~/org/notes/"))
 
 (after! org (add-to-list 'org-capture-templates
                          '("n" "New Note" plain (file my/generate-org-note-name)
@@ -339,34 +302,6 @@ Need to add condition to adjust faces based on theme select.
 (setq org-use-property-inheritance t ; We like to inhert properties from their parents
       org-catch-invisible-edits 'smart) ; Catch invisible edits
 #+END_SRC
-*** Publishing
-#+BEGIN_SRC emacs-lisp
-(after! org (setq org-publish-project-alist
-                  '(("attachments"
-                     :base-directory "~/org/notes/attachments/"
-                     :base-extension "jpg\\|jpeg\\|png\\|pdf\\|css"
-                     :publishing-directory "~/publish_html/images/"
-                     :publishing-function org-publish-attachment)
-                    ("notes"
-                     :base-directory "~/org/"
-                     :publishing-directory "~/publish_html"
-                     :base-extension "org"
-                     :with-drawers t
-                     :recursive t
-                     :auto-sitemap t
-                     :sitemap-filename "index.html"
-                     :publishing-function org-html-publish-to-html
-                     :section-numbers nil
-                     :html-head "<link rel=\"stylesheet\"
-                     href=\"http://dakrone.github.io/org.css\"
-                     type=\"text/css\"/>"
-                     :html-head-extra "<style type=text/css>body{ max-width:80%;  }</style>"
-                     :with-email t
-                     :html-link-up ".."
-                     :auto-preamble t
-                     :with-toc t)
-                    ("myprojectweb" :components("attachments" "notes")))))
-#+END_SRC
 *** Refiling
 #+BEGIN_SRC emacs-lisp
 (after! org (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
@@ -494,7 +429,7 @@ Need to add condition to adjust faces based on theme select.
 (provide 'setup-helm-org-rifle)
 #+END_SRC
 ** Org Roam
-#+BEGIN_SRC emacs-lisp
+#BEGIN_SRC emacs-lisp
 (use-package! org-roam
   :commands (org-roam-insert org-roam-find-file org-roam)
   :init
@@ -511,10 +446,10 @@ Need to add condition to adjust faces based on theme select.
   (org-roam-mode +1))
 (require 'company-org-roam)
 (push 'company-org-roam company-backends)
-#+END_SRC
+#END_SRC
 ** Org Journal
 #+BEGIN_SRC emacs-lisp
-(after! org-journal
+;(after! org-journal
   (setq org-journal-date-prefix "#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
@@ -525,7 +460,7 @@ Need to add condition to adjust faces based on theme select.
         org-journal-file-pattern (org-journal-dir-and-format->regex
                                   org-journal-dir org-journal-file-format))
     (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
-)
+;)
 #+END_SRC
 ** Super Agenda
 #+BEGIN_SRC emacs-lisp
@@ -589,16 +524,9 @@ Need to add condition to adjust faces based on theme select.
                  (org-agenda-files my-task-files)
                  (org-super-agenda-groups
                   '((:auto-parent t)))))))))
-(defun my/org-capture-note-file ()
-  "Select a capture note file."
-  (interactive)
-  (let ((file (read-file-name "Note file: "
-                              (expand-file-name "notes/" org-directory))))
-    (if (or (file-exists-p file)
-            (string-suffix-p ".org" file))
-        file
-      (concat file ".org"))))
 #+END_SRC
+
+
 * Custom Functions
 ** my-agenda-prefix
 #+BEGIN_SRC emacs-lisp

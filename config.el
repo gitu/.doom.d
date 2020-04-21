@@ -4,34 +4,11 @@
                   org-ellipsis "▼"))
 
 (setq doom-theme 'doom-vibrant)
-(custom-theme-set-faces
- 'user
- '(org-ellipsis ((t (:foreground "SpringGreen")))))
-(if (equal doom-theme 'chocolate)
-     (custom-theme-set-faces
-      'user
-      '(org-list-dt ((t (:foreground "cadet blue"))))
-      '(org-ellipsis ((t (:foreground "gold"))))))
-(if (equal doom-theme 'chocolate)
-     (setq org-emphasis-alist
-           '(("*" (bold :foreground "MediumPurple"))
-             ("/" (italic :foreground "VioletRed"))
-             ("_" underline)
-             ("=" (:foreground "cadet blue"))
-             ("~" (:foreground "cadet blue"))
-             ("+" (:foreground "slate grey" :strike-through t)))))
-     (if (equal doom-theme 'doom-snazzy)
-         (custom-theme-set-faces
-          'user
-          '(org-block ((t (:background "#20222b"))))
-          '(org-block-begin-line ((t (:background "#282A36"))))
-          '(org-ellipsis ((t (:foreground "SpringGreen"))))
-          '(org-headline-done ((t (:strike-through t))))))
 
 (setq user-full-name "Florian Schrag"
       user-mail-address "f@schr.ag")
-(display-time-mode 1)
-(setq display-time-day-and-date t)
+;(display-time-mode 1)
+;(setq display-time-day-and-date t)
 
 (load-library "find-lisp")
 (defvar my-org-dir "~/org/")
@@ -48,6 +25,7 @@
 (defvar my-org-archive-location "~/org/workload/archive.org::datetree/")
 (defvar my-org-default-notes-files "~/org/workload/inbox.org")
 (defvar my-org-archive-directory "~/org/archives/")
+(setq org-journal-dir my-deft-directory)
 
 (map! :after org
       :map org-mode-map
@@ -87,14 +65,10 @@
 
 (setq display-line-numbers-type 'relative)
 
-(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
-
-(require 'bookmark+)
+;(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 
 (setq deft-directory my-deft-directory)
 (setq deft-current-sort-method 'title)
-
-(setq rmh-elfeed-org-files my-elfeed-org-files)
 
 (after! org (setq org-agenda-files my-task-files))
 (after! org (setq org-agenda-diary-file my-diary
@@ -139,7 +113,7 @@
 
 (defun my/generate-org-note-name ()
   (setq my-org-note--name (read-string "Name: "))
-  (expand-file-name (format "%s.org" my-org-note--name) "~/.org/notes/"))
+  (expand-file-name (format "%s.org" my-org-note--name) "~/org/notes/"))
 
 (after! org (add-to-list 'org-capture-templates
                          '("n" "New Note" plain (file my/generate-org-note-name)
@@ -239,32 +213,6 @@
 
 (setq org-use-property-inheritance t ; We like to inhert properties from their parents
       org-catch-invisible-edits 'smart) ; Catch invisible edits
-
-(after! org (setq org-publish-project-alist
-                  '(("attachments"
-                     :base-directory "~/org/notes/attachments/"
-                     :base-extension "jpg\\|jpeg\\|png\\|pdf\\|css"
-                     :publishing-directory "~/publish_html/images/"
-                     :publishing-function org-publish-attachment)
-                    ("notes"
-                     :base-directory "~/org/"
-                     :publishing-directory "~/publish_html"
-                     :base-extension "org"
-                     :with-drawers t
-                     :recursive t
-                     :auto-sitemap t
-                     :sitemap-filename "index.html"
-                     :publishing-function org-html-publish-to-html
-                     :section-numbers nil
-                     :html-head "<link rel=\"stylesheet\"
-                     href=\"http://dakrone.github.io/org.css\"
-                     type=\"text/css\"/>"
-                     :html-head-extra "<style type=text/css>body{ max-width:80%;  }</style>"
-                     :with-email t
-                     :html-link-up ".."
-                     :auto-preamble t
-                     :with-toc t)
-                    ("myprojectweb" :components("attachments" "notes")))))
 
 (after! org (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
                   org-outline-path-complete-in-steps nil
@@ -384,24 +332,7 @@
 
 (provide 'setup-helm-org-rifle)
 
-(use-package! org-roam
-  :commands (org-roam-insert org-roam-find-file org-roam)
-  :init
-  (setq org-roam-directory my-deft-directory)
-;  (setq org-roam-graph-viewer "/usr/bin/open")
-  :bind (:map org-roam-mode-map
-          (("C-c n l" . org-roam)
-           ("C-c n f" . org-roam-find-file)
-           ("C-c n b" . org-roam-switch-to-buffer)
-           ("C-c n g" . org-roam-graph-show))
-          :map org-mode-map
-          (("C-c n i" . org-roam-insert)))
-  :config
-  (org-roam-mode +1))
-(require 'company-org-roam)
-(push 'company-org-roam company-backends)
-
-(after! org-journal
+;(after! org-journal
   (setq org-journal-date-prefix "#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
@@ -412,7 +343,7 @@
         org-journal-file-pattern (org-journal-dir-and-format->regex
                                   org-journal-dir org-journal-file-format))
     (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
-)
+;)
 
 (org-super-agenda-mode t)
 (setq org-agenda-custom-commands
@@ -474,15 +405,6 @@
                  (org-agenda-files my-task-files)
                  (org-super-agenda-groups
                   '((:auto-parent t)))))))))
-(defun my/org-capture-note-file ()
-  "Select a capture note file."
-  (interactive)
-  (let ((file (read-file-name "Note file: "
-                              (expand-file-name "notes/" org-directory))))
-    (if (or (file-exists-p file)
-            (string-suffix-p ".org" file))
-        file
-      (concat file ".org"))))
 
 (defun my-agenda-prefix ()
   (format "%s" (my-agenda-indent-string (org-current-level))))
