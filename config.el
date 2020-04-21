@@ -20,6 +20,7 @@
 (defvar my-task-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cnfi.org" "~/org/workload/priv.org"))
 (defvar my-diary "~/org/diary.org")
 (defvar my-deft-directory "~/org/notes/")
+(defvar my-notes-files '("~/org/notes/"))
 (defvar my-elfeed-org-files "~/.elfeed/elfeed.org")
 (defvar my-org-export-directory "~/.export/")
 (defvar my-org-archive-location "~/org/workload/archive.org::datetree/")
@@ -380,7 +381,7 @@
         ("n" "Notes"
          ((todo ""
                 ((org-agenda-overriding-header "Note Actions")
-                 (org-agenda-files '(my-deft-directory))
+                 (org-agenda-files my-notes-files)
                  (org-super-agenda-groups
                   '((:auto-category t)))))))
         ("i" "Inbox"

@@ -42,6 +42,7 @@ from the Emacs Lisp code blocks in ~config.org~. This readme file gets created w
 (defvar my-task-files '("~/org/workload/tasks.org" "~/org/workload/tickler.org" "~/org/workload/cnfi.org" "~/org/workload/priv.org"))
 (defvar my-diary "~/org/diary.org")
 (defvar my-deft-directory "~/org/notes/")
+(defvar my-notes-files '("~/org/notes/"))
 (defvar my-elfeed-org-files "~/.elfeed/elfeed.org")
 (defvar my-org-export-directory "~/.export/")
 (defvar my-org-archive-location "~/org/workload/archive.org::datetree/")
@@ -106,7 +107,7 @@ Set line numbers to relative:
 (setq deft-directory my-deft-directory)
 (setq deft-current-sort-method 'title)
 #+END_SRC
-** OrgMode
+** Org Mode
 *** Agenda
 #+BEGIN_SRC emacs-lisp
 (after! org (setq org-agenda-files my-task-files))
@@ -499,7 +500,7 @@ Need to add condition to adjust faces based on theme select.
         ("n" "Notes"
          ((todo ""
                 ((org-agenda-overriding-header "Note Actions")
-                 (org-agenda-files '(my-deft-directory))
+                 (org-agenda-files my-notes-files)
                  (org-super-agenda-groups
                   '((:auto-category t)))))))
         ("i" "Inbox"
