@@ -178,7 +178,9 @@
                   +org-export-directory my-org-export-directory
                   org-archive-location my-org-archive-location
                   org-default-notes-file my-org-default-notes-files
-                  projectile-project-search-path my-projectile-search-path))
+                  projectile-project-search-path my-projectile-search-path
+                  org-roam-directory my-deft-directory
+                  ))
 
 (after! org (setq org-html-head-include-scripts t
                   org-export-with-toc t
