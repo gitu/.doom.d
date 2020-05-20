@@ -84,9 +84,9 @@
                   org-enforce-todo-checkbox-dependencies nil
                   org-habit-show-habits t))
 
-(load-library "find-lisp")
-(after! org (setq org-agenda-files
-                  (find-lisp-find-files my-org-dir "\.org$")))
+;(load-library "find-lisp")
+;(after! org (setq org-agenda-files
+ ;                 (find-lisp-find-files my-org-dir "\.org$")))
 
 ;(after! org (setq org-capture-templates
 ;                  '(("a" "Append")
@@ -187,14 +187,51 @@
                   org-export-with-author t
                   org-export-headline-levels 5
                   org-export-with-drawers nil
-                  org-export-with-email t
+                  org-export-with-email nil
                   org-export-with-footnotes t
                   org-export-with-sub-superscripts nil
                   org-export-with-latex t
                   org-export-with-section-numbers nil
-                  org-export-with-properties t
+                  org-export-with-properties nil
                   org-export-with-smart-quotes t
                   org-export-backends '(pdf ascii html latex odt md pandoc)))
+
+
+(after! org
+(setq org-publish-project-alist
+      '(
+
+
+("org-notes-pdf"
+ :base-directory "~/org"
+ :base-extension "org"
+ :publishing-directory "~/org-export/pdf"
+ :recursive t
+ :publishing-function org-latex-publish-to-pdf
+ :headline-levels 4             ; Just the default for this project.
+ :auto-preamble t
+)
+
+("org-notes-html"
+ :base-directory "~/org"
+ :base-extension "org"
+ :publishing-directory "~/org-export/html"
+ :recursive t
+ :publishing-function org-html-publish-to-html
+ :headline-levels 4             ; Just the default for this project.
+ :auto-preamble t
+ )
+
+("org-notes-html-static"
+ :base-directory "~/org"
+ :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+ :publishing-directory "~/org-export/html"
+ :recursive t
+ :publishing-function org-publish-attachment
+ )
+
+("org" :components ("org-notes-html" "org-notes-html-static" "org-notes-pdf"))
+      )))
 
 (after! org (setq org-todo-keyword-faces
       '(("TODO" :foreground "OrangeRed" :weight bold)
@@ -335,7 +372,7 @@
 
 (provide 'setup-helm-org-rifle)
 
-;(after! org-journal
+;(after! org-
   (setq org-journal-date-prefix "#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
