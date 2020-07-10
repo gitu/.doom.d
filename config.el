@@ -1,8 +1,3 @@
-(after! org (setq org-hide-emphasis-markers nil
-                  org-bullets-bullet-list '("◉" "⚫" "○")
-                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
-                  org-ellipsis "▼"))
-
 (setq doom-theme 'doom-vibrant)
 
 (setq user-full-name "Florian Schrag"
@@ -372,18 +367,31 @@
 
 (provide 'setup-helm-org-rifle)
 
-;(after! org-
+(after! org-journal
   (setq org-journal-date-prefix "#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
         org-journal-date-format "%Y-%m-%d"
-        org-journal-dir my-deft-directory
-        org-journal-time-prefix "* "
-        org-journal-cache-file (concat doom-cache-dir "org-journal")
-        org-journal-file-pattern (org-journal-dir-and-format->regex
-                                  org-journal-dir org-journal-file-format))
-    (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
+  )
+)
+;  (setq org-journal-dir my-deft-directory
+;        org-journal-time-prefix "* "
+;        org-journal-cache-file (concat doom-cache-dir "org-journal")
+;        org-journal-file-pattern (;org-journal-dir-and-format->regex
+;                                  org-journal-dir org-journal-file-format))
+;   (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
 ;)
+
+(after! org-roam-server
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 38080
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
 
 (org-super-agenda-mode t)
 (setq org-agenda-custom-commands
@@ -628,3 +636,8 @@
   (setq truncate-lines nil))
 
 (add-hook 'text-mode-hook 'jethro/truncate-lines-hook)
+
+(after! org (setq org-hide-emphasis-markers nil
+                  org-bullets-bullet-list '("◉" "⚫" "○")
+                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
+                  org-ellipsis "▼"))

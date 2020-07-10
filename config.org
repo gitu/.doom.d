@@ -499,18 +499,33 @@ Need to add condition to adjust faces based on theme select.
 #END_SRC
 ** Org Journal
 #+BEGIN_SRC emacs-lisp
-;(after! org-
+(after! org-journal
   (setq org-journal-date-prefix "#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
         org-journal-date-format "%Y-%m-%d"
-        org-journal-dir my-deft-directory
-        org-journal-time-prefix "* "
-        org-journal-cache-file (concat doom-cache-dir "org-journal")
-        org-journal-file-pattern (org-journal-dir-and-format->regex
-                                  org-journal-dir org-journal-file-format))
-    (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
+  )
+)
+;  (setq org-journal-dir my-deft-directory
+;        org-journal-time-prefix "* "
+;        org-journal-cache-file (concat doom-cache-dir "org-journal")
+;        org-journal-file-pattern (;org-journal-dir-and-format->regex
+;                                  org-journal-dir org-journal-file-format))
+;   (add-to-list 'auto-mode-alist (cons org-journal-file-pattern 'org-journal-mode))
 ;)
+#+END_SRC
+** Org Roam Server
+#+BEGIN_SRC emacs-lisp
+(after! org-roam-server
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 38080
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
 #+END_SRC
 ** Super Agenda
 #+BEGIN_SRC emacs-lisp
@@ -575,12 +590,6 @@ Need to add condition to adjust faces based on theme select.
                  (org-super-agenda-groups
                   '((:auto-parent t)))))))))
 #+END_SRC
-
-#+RESULTS:
-| k | Tasks   | ((agenda  ((org-agenda-overriding-header Agenda) (org-agenda-span (quote 1)) (org-agenda-start-day (org-today)) (org-agenda-files my-task-files))) (todo  ((org-agenda-overriding-header Tasks) (org-agenda-skip-function (quote (or (and (org-agenda-skip-entry-if (quote notregexp) #[A-C]) (org-agenda-skip-entry-if (quote notregexp) :@\w+)) (org-agenda-skip-if nil (quote (scheduled deadline))) (org-agenda-skip-if (quote todo) (quote (SOMEDAY)))))) (org-agenda-files my-task-files) (org-super-agenda-groups (quote ((:name Priority Items :priority>= B) (:auto-parent t)))))) (todo  ((org-agenda-overriding-header Delegated Tasks) (org-agenda-files my-task-files) (org-tags-match-list-sublevels t) (org-agenda-skip-function (quote (or (org-agenda-skip-subtree-if (quote nottodo) (quote (DELEGATED)))))) (org-super-agenda-groups (quote ((:auto-property WHO))))))) | nil | (~/org/ax/tasks.html ~/org/ax/tasks.txt) |
-| n | Notes   | ((todo  ((org-agenda-overriding-header Note Actions) (org-agenda-files my-notes-files) (org-super-agenda-groups (quote ((:auto-category t)))))))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |     |                                          |
-| i | Inbox   | ((todo  ((org-agenda-overriding-header Inbox) (org-agenda-skip-function (quote (or (org-agenda-skip-entry-if (quote regexp) :@\w+) (org-agenda-skip-entry-if (quote regexp) [#[A-E]]) (org-agenda-skip-if (quote nil) (quote (scheduled deadline))) (org-agenda-skip-entry-if (quote todo) (quote (SOMEDAY))) (org-agenda-skip-entry-if (quote todo) (quote (DELEGATED)))))) (org-agenda-files my-task-files) (org-super-agenda-groups (quote ((:auto-ts t)))))))                                                                                                                                                                                                                                                                                                                                                                                                                          |     |                                          |
-| s | Someday | ((todo  ((org-agenda-overriding-header Someday) (org-agenda-skip-function (quote (or (org-agenda-skip-entry-if (quote nottodo) (quote (SOMEDAY)))))) (org-agenda-files my-task-files) (org-super-agenda-groups (quote ((:auto-parent t)))))))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |     |                                          |
 
 
 * Custom Functions

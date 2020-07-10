@@ -25,3 +25,4 @@
 ;(package! org-autolist)
 ;(package! org-mru-clock)
 ;(package! org-time-budgets)
+(package! org-roam-server)
