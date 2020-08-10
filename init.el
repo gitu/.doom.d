@@ -76,14 +76,14 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       spell             ; tasing you for misspelling mispelling
-       grammar           ; tasing grammar mistake every you make
+       ;spell             ; tasing you for misspelling mispelling
+       ;grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       docker
+       ;docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -92,8 +92,8 @@
        ;;lsp
        ;;macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
-       make              ; run make tasks from Emacs
-       pass              ; password manager for nerds
+       ;make              ; run make tasks from Emacs
+       ;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
@@ -151,7 +151,7 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       ;sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?

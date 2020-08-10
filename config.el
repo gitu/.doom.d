@@ -1,3 +1,8 @@
+(after! org (setq org-hide-emphasis-markers nil
+                  org-bullets-bullet-list '("◉" "⚫" "○")
+                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
+                  org-ellipsis "▼"))
+
 (setq doom-theme 'doom-vibrant)
 
 (setq user-full-name "Florian Schrag"
@@ -83,9 +88,9 @@
 ;(after! org (setq org-agenda-files
  ;                 (find-lisp-find-files my-org-dir "\.org$")))
 
-;(after! org (setq org-capture-templates
-;                  '(("a" "Append")
-;                    ("c" "Captures"))))
+(after! org (setq org-capture-templates
+                  '(("a" "Append")
+                    ("c" "Captures"))))
 
 (after! org (add-to-list 'org-capture-templates
                          '("h" "Append Headline" entry (file+function org-capture-file-selector org-capture-templates-append-headline)
@@ -368,7 +373,7 @@
 (provide 'setup-helm-org-rifle)
 
 (after! org-journal
-  (setq org-journal-date-prefix "#+TITLE: "
+  (setq org-journal-date-prefix "#+roam_tags: journal\n#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
         org-journal-date-format "%Y-%m-%d"
@@ -637,7 +642,24 @@
 
 (add-hook 'text-mode-hook 'jethro/truncate-lines-hook)
 
-(after! org (setq org-hide-emphasis-markers nil
-                  org-bullets-bullet-list '("◉" "⚫" "○")
-                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
-                  org-ellipsis "▼"))
+(defun insert-random-image-name ()
+  (interactive)
+  (insert ":cache yes :file ")
+  (dotimes (_ 10)
+    (insert
+     (let ((x (random 36)))
+       (if (< x 10) (+ x ?0) (+ x (- ?a 10))))))
+  (insert ".png :output-dir images/gen")
+  )
+
+(defun insert-plantuml ()
+  (interactive)
+  (insert "#+begin_src plantuml :cache yes :file ")
+  (dotimes (_ 10)
+    (insert
+     (let ((x (random 36)))
+       (if (< x 10) (+ x ?0) (+ x (- ?a 10))))))
+  (insert ".png :output-dir images/gen")
+  (newline 2)
+  (insert "#+end_src")
+  )

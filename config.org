@@ -131,9 +131,9 @@ Set line numbers to relative:
 #+END_SRC
 *** Captures
 #+BEGIN_SRC emacs-lisp
-;(after! org (setq org-capture-templates
-;                  '(("a" "Append")
-;                    ("c" "Captures"))))
+(after! org (setq org-capture-templates
+                  '(("a" "Append")
+                    ("c" "Captures"))))
 #+END_SRC
 ***** Capture
 ****** Append Headline
@@ -474,33 +474,19 @@ Need to add condition to adjust faces based on theme select.
 
 (provide 'setup-helm-org-rifle)
 #+END_SRC
-** Org Roam
+** Org Roam Templates
 #BEGIN_SRC emacs-lisp
-;(use-package! org-roam
-;  :commands (org-roam-insert org-roam-find-file org-roam)
-;  :init
-;  (setq org-roam-directory my-deft-directory)
-;  (setq org-roam-graph-viewer "/usr/bin/open")
-;  :bind (:map org-roam-mode-map
-;          (("C-c n l" . org-roam)
-;           ("C-c n f" . org-roam-find-file)
-;           ("C-c n b" . org-roam-switch-to-buffer)
-;           ("C-c n g" . org-roam-graph-show))
-;          :map org-mode-map
-;          (("C-c n i" . org-roam-insert)))
-;  :config
-;  (org-roam-mode +1))
-;(require 'company-org-roam)
-;(push 'company-org-roam company-backends)
-
-;(after! org-mode
-;    (set-company-backend! 'company-org-roam)
-;)
+(after! org-roam (setq org-roam-capture-templates
+(
+    ("d" "default" plain #'org-roam-capture--get-point "%?" :file-name "%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}\n" :unnarrowed t)
+    ("p" "person" plain #'org-roam-capture--get-point "%?" :file-name "%<%Y%m%d%H%M%S>-${slug}" :head "#+title: ${title}\n#+roam_tags: person\n\n" :unnarrowed t)
+)
+))
 #END_SRC
 ** Org Journal
 #+BEGIN_SRC emacs-lisp
 (after! org-journal
-  (setq org-journal-date-prefix "#+TITLE: "
+  (setq org-journal-date-prefix "#+roam_tags: journal\n#+TITLE: "
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-time-format "<%Y-%m-%d %H:%M> "
         org-journal-date-format "%Y-%m-%d"
@@ -794,4 +780,31 @@ Need to add condition to adjust faces based on theme select.
   (setq truncate-lines nil))
 
 (add-hook 'text-mode-hook 'jethro/truncate-lines-hook)
+#+END_SRC
+
+** insert-random-image-name
+#+BEGIN_SRC emacs-lisp
+(defun insert-random-image-name ()
+  (interactive)
+  (insert ":cache yes :file ")
+  (dotimes (_ 10)
+    (insert
+     (let ((x (random 36)))
+       (if (< x 10) (+ x ?0) (+ x (- ?a 10))))))
+  (insert ".png :output-dir images/gen")
+  )
+#+END_SRC
+** insert-plantuml
+#+BEGIN_SRC emacs-lisp
+(defun insert-plantuml ()
+  (interactive)
+  (insert "#+begin_src plantuml :cache yes :file ")
+  (dotimes (_ 10)
+    (insert
+     (let ((x (random 36)))
+       (if (< x 10) (+ x ?0) (+ x (- ?a 10))))))
+  (insert ".png :output-dir images/gen")
+  (newline 2)
+  (insert "#+end_src")
+  )
 #+END_SRC
