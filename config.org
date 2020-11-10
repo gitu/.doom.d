@@ -75,6 +75,20 @@ from the Emacs Lisp code blocks in ~config.org~. This readme file gets created w
       :desc "Elfeed" "e" #'elfeed
       :desc "Deft" "w" #'deft)
 #+END_SRC
+** Autosave
+#+BEGIN_SRC emacs-lisp
+(defun xah-save-all-unsaved ()
+  "Save all unsaved files. no ask. Version 2019-11-05"
+  (interactive)
+  (save-some-buffers t ))
+
+;; when switching out of emacs, all unsaved files will be saved
+(add-hook 'focus-out-hook 'xah-save-all-unsaved)
+
+;; stop creating those #auto-save# files
+;(setq auto-save-default nil)
+
+#+END_SRC
 * Behavior
 ** Popup Rules
 #+BEGIN_SRC emacs-lisp
@@ -106,6 +120,11 @@ Set line numbers to relative:
 #+BEGIN_SRC emacs-lisp
 (setq deft-directory my-deft-directory)
 (setq deft-current-sort-method 'title)
+#+END_SRC
+** PlantUml
+#+BEGIN_SRC emacs-lisp
+;;(setq plantuml-jar-path "/path/to/your/copy/of/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
 #+END_SRC
 ** Org Mode
 *** Agenda

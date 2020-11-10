@@ -1,8 +1,3 @@
-(after! org (setq org-hide-emphasis-markers nil
-                  org-bullets-bullet-list '("◉" "⚫" "○")
-                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
-                  org-ellipsis "▼"))
-
 (setq doom-theme 'doom-vibrant)
 
 (setq user-full-name "Florian Schrag"
@@ -51,6 +46,17 @@
       :desc "Elfeed" "e" #'elfeed
       :desc "Deft" "w" #'deft)
 
+(defun xah-save-all-unsaved ()
+  "Save all unsaved files. no ask. Version 2019-11-05"
+  (interactive)
+  (save-some-buffers t ))
+
+;; when switching out of emacs, all unsaved files will be saved
+(add-hook 'focus-out-hook 'xah-save-all-unsaved)
+
+;; stop creating those #auto-save# files
+;(setq auto-save-default nil)
+
 (after! org (set-popup-rule! "^Capture.*\\.org$" :side 'right :size .50 :select t :vslot 2 :ttl 3))
 (after! org (set-popup-rule! "Dictionary" :side 'bottom :size .30 :select t :vslot 3 :ttl 3))
 (after! org (set-popup-rule! "*helm*" :side 'bottom :size .30 :select t :vslot 5 :ttl 3))
@@ -70,6 +76,9 @@
 
 (setq deft-directory my-deft-directory)
 (setq deft-current-sort-method 'title)
+
+;;(setq plantuml-jar-path "/path/to/your/copy/of/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
 
 (after! org (setq org-agenda-files my-task-files))
 (after! org (setq org-agenda-diary-file my-diary
@@ -663,3 +672,8 @@
   (newline 2)
   (insert "#+end_src")
   )
+
+(after! org (setq org-hide-emphasis-markers nil
+                  org-bullets-bullet-list '("◉" "⚫" "○")
+                  org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+"))
+                  org-ellipsis "▼"))
