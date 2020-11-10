@@ -35,10 +35,14 @@
        indent-guides     ; highlighted indent columns
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
-       ;;neotree           ; a project drawer, like NERDTree for vim
+       neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
+<<<<<<< HEAD
        ligatures         ; ligatures or substitute text with pretty symbols
+=======
+       ligatures.        ; ligatures or substitute text with pretty symbols
+>>>>>>> 1db6d60a0ec977526f34653daef10637df0f5e61
        ;;tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
